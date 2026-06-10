@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Miembros del Equipo</title>
+</head>
+<body>
+
+    <h2>Panel de Miembros - Carlos Narvaez</h2>
+
+    <div style="margin-bottom: 20px;">
+        <input type="number" id="userId" placeholder="ID (Solo para PUT/DELETE)">
+        <input type="text" id="firstName" placeholder="Nombre">
+        <input type="text" id="lastName" placeholder="Apellido">
+        <input type="text" id="role" placeholder="Rol">
+        <br><br>
+        <button id="btnPost">Registrar Miembro</button>
+        <button id="btnPut">Modificar por ID</button>
+        <button id="btnGet">Actualizar Lista</button>
+    </div>
+
+    <hr>
+
+    <h3>Lista de Miembros:</h3>
+    <div id="miembros-lista"></div>
+
+   <script src="members.js" type="module"></script>
+</body>
+</html>
