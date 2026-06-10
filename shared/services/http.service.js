@@ -70,26 +70,26 @@ export default class HttpService {
 
         return await response.json();
     }
+    
     // delete
     async delete(endpoint) {
-        const token = TokenResponse.loadFromLocalStorage();
+    const token = TokenResponse.loadFromLocalStorage();
 
-        const headers = { 'Content-Type': 'application/json' };
-        if (token !== null && token.isValid()) {
-            headers['Authorization'] = `Bearer ${token.token}`;
-        }
-
-        const fullEndpoint = this.baseUrl + endpoint;
-        const response = await fetch(fullEndpoint, {
-            method: 'DELETE',
-            headers: headers
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || 'An error occurred while deleting data.');
-        }
-
-        return await response.json();
+    const headers = { 'Content-Type': 'application/json' };
+    if (token !== null && token.isValid()) {
+        headers['Authorization'] = `Bearer ${token.token}`;
     }
+
+    const fullEndpoint = this.baseUrl + endpoint;
+    const response = await fetch(fullEndpoint, {
+        method: 'DELETE',
+        headers: headers
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'An error occurred while deleting data.');
+    }
+    return true;
+}
 }
