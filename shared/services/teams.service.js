@@ -29,7 +29,6 @@ export default class TeamsService extends HttpService {
         return TeamResponse.fromJson(json);
     }
 
-    // 
     async update(id, teamRequest) {
         await super.put(`${this.endpoint}/${id}`, teamRequest.toJson());
         return true;

@@ -75,7 +75,7 @@ export default class HttpService {
     const text = await response.text();
     return text ? JSON.parse(text) : true;
 }
-
+    
     // DELETE
     async delete(endpoint) {
     const token = TokenResponse.loadFromLocalStorage();
@@ -95,8 +95,7 @@ export default class HttpService {
         const errorData = await response.json();
         throw new Error(errorData.message || 'An error occurred while deleting data.');
     }
-
     
     return true;
-}
+    }
 }
