@@ -28,4 +28,14 @@ export default class TeamsService extends HttpService {
         const json = await super.post(this.endpoint, teamRequest.toJson());
         return TeamResponse.fromJson(json);
     }
+
+    // 
+    async update(id, teamRequest) {
+        await super.put(`${this.endpoint}/${id}`, teamRequest.toJson());
+        return true;
+    }
+
+    async delete(id) {
+        return await super.delete(`${this.endpoint}/${id}`);
+    }
 }

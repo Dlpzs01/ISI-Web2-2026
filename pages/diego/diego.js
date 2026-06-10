@@ -20,7 +20,7 @@ function showMessage(text, type = 'success') {
     setTimeout(() => { message.textContent = ''; message.className = 'message'; }, 3000);
 }
 
-//Cargar y renderizar tabla
+// Cargar y renderizar tabla
 async function buildTable() {
     tableBody.innerHTML = '<tr><td colspan="5" class="empty">Cargando...</td></tr>';
     try {
@@ -56,7 +56,7 @@ async function buildTable() {
     }
 }
 
-// ── Crear o editar ──────────────────────────────────────────────
+// Crear o editar
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -85,7 +85,7 @@ form.addEventListener('submit', async (event) => {
     }
 });
 
-// ── Iniciar edición ─────────────────────────────────────────────
+// Iniciar edición
 function startEdit(team) {
     teamIdInput.value = team.id;
     nameInput.value   = team.name;
@@ -98,7 +98,7 @@ function startEdit(team) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ── Cancelar edición ────────────────────────────────────────────
+// Cancelar edición 
 cancelBtn.addEventListener('click', resetForm);
 
 function resetForm() {
@@ -111,7 +111,7 @@ function resetForm() {
     cancelBtn.style.display = 'none';
 }
 
-// ── Eliminar ────────────────────────────────────────────────────
+// Eliminar 
 async function handleDelete(id, name) {
     if (!confirm(`¿Eliminar el team "${name}"?`)) return;
     try {
@@ -123,5 +123,5 @@ async function handleDelete(id, name) {
     }
 }
 
-// ── Iniciar ─────────────────────────────────────────────────────
+// Iniciar 
 buildTable();
