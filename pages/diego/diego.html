@@ -3,34 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../diego/diego.css">
     <title>Trabajo Diego</title>
+    <link rel="stylesheet" href="diego.css">
 </head>
 <body>
 
 <div class="container">
     <h1>Teams</h1>
+
+    <!-- Formulario crear / editar team -->
     <div class="form-card">
-        <h2 id="form-title">Crear team</h2>
+        <h2 id="form-title">Crear Team</h2>
         <form id="team-form">
             <input type="hidden" id="team-id" />
             <div class="form-group">
                 <label for="team-name">Nombre</label>
-                <input type="text" id="team-name" placeholder="Nombre del team" required/>
+                <input type="text" id="team-name" placeholder="Nombre del team" required />
             </div>
             <div class="form-group">
                 <label for="team-description">Descripción</label>
-                <input type="text" id="team-description" placeholder="Descripción"/>
+                <input type="text" id="team-description" placeholder="Descripción" />
             </div>
             <div class="form-buttons">
                 <button type="submit" id="submit-btn">Crear</button>
-                <button type="button" id="cancel-btn" class="btn-secondary">Cancelar</button>
+                <button type="button" id="cancel-btn" class="btn-secondary" style="display:none">Cancelar</button>
             </div>
         </form>
         <p id="form-message" class="message"></p>
     </div>
+
+    <!-- Tabla de teams -->
     <div class="table-card">
-        <h2>Lista de teams</h2>
+        <h2>Lista de Teams</h2>
         <table>
             <thead>
                 <tr>
@@ -46,6 +50,46 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Sección de miembros -->
+    <div class="table-card" id="members-section" style="display:none">
+        <h2 id="members-title">Miembros del Team</h2>
+
+        <!-- Agregar miembro -->
+        <div class="member-form">
+            <input type="hidden" id="current-team-id" />
+            <div class="form-group">
+                <label for="member-user-id">User ID</label>
+                <input type="number" id="member-user-id" placeholder="ID del usuario" />
+            </div>
+            <div class="form-group">
+                <label for="member-role">Rol</label>
+                <input type="text" id="member-role" placeholder="Ej: Admin, Member..." />
+            </div>
+            <div class="form-buttons">
+                <button type="button" id="add-member-btn">Agregar Miembro</button>
+                <button type="button" id="close-members-btn" class="btn-secondary">Cerrar</button>
+            </div>
+            <p id="member-message" class="message"></p>
+        </div>
+
+        <!-- Tabla de miembros -->
+        <table style="margin-top: 16px;">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Rol</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="members-table-body">
+                <tr><td colspan="5" class="empty">Cargando...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
 </div>
 
 <script type="module" src="diego.js"></script>
