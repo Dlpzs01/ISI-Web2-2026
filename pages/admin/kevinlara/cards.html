@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Cartas</title>
+</head>
+<body>
+    <h1>Mis Cartas</h1>
+
+    <form id="cardForm">
+        <input type="hidden" id="cardId">
+        <input type="text" id="teamId" placeholder="ID del Equipo" required>
+        <input type="text" id="cardName" placeholder="Nombre" required>
+        <input type="text" id="cardDesc" placeholder="Descripción">
+        <button type="submit">Agregar</button>
+    </form>
+
+    <hr>
+
+    <button id="loadBtn">Cargar Cartas</button>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="cardsTableBody"></tbody>
+    </table>
+
+    <script src="./cards.js" type="module"></script>
+</body>
+</html>
