@@ -2,7 +2,8 @@ import TokenResponse from '../models/response/token.response.js';
 
 export default class HttpService {
     baseUrl = 'https://localhost:7286/api';
-    // get
+
+    // GET
     async get(endpoint) {
         const fullEndpoint = this.baseUrl + endpoint;
         const token = TokenResponse.loadFromLocalStorage();
@@ -24,7 +25,8 @@ export default class HttpService {
 
         return await response.json();
     }
-    // post
+
+    // POST
     async post(endpoint, body) {
         const token = TokenResponse.loadFromLocalStorage();
 
@@ -47,49 +49,53 @@ export default class HttpService {
 
         return await response.json();
     }
-    // put
+
+    // PUT
     async put(endpoint, body) {
-        const token = TokenResponse.loadFromLocalStorage();
+    const token = TokenResponse.loadFromLocalStorage();
 
-        const headers = { 'Content-Type': 'application/json' };
-        if (token !== null && token.isValid()) {
-            headers['Authorization'] = `Bearer ${token.token}`;
-        }
-
-        const fullEndpoint = this.baseUrl + endpoint;
-        const response = await fetch(fullEndpoint, {
-            method: 'PUT',
-            headers: headers,
-            body: JSON.stringify(body)
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || 'An error occurred while putting data.');
-        }
-
-        return await response.json();
+    const headers = { 'Content-Type': 'application/json' };
+    if (token !== null && token.isValid()) {
+        headers['Authorization'] = `Bearer ${token.token}`;
     }
-    // delete
+
+    const fullEndpoint = this.baseUrl + endpoint;
+    const response = await fetch(fullEndpoint, {
+        method: 'PUT',
+        headers: headers,
+        body: JSON.stringify(body)
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'An error occurred while putting data.');
+    }
+
+    // Puede devolver vacío
+    const text = await response.text();
+    return text ? JSON.parse(text) : true;
+}
+    
+    // DELETE
     async delete(endpoint) {
-        const token = TokenResponse.loadFromLocalStorage();
+    const token = TokenResponse.loadFromLocalStorage();
 
-        const headers = { 'Content-Type': 'application/json' };
-        if (token !== null && token.isValid()) {
-            headers['Authorization'] = `Bearer ${token.token}`;
-        }
+    const headers = { 'Content-Type': 'application/json' };
+    if (token !== null && token.isValid()) {
+        headers['Authorization'] = `Bearer ${token.token}`;
+    }
 
-        const fullEndpoint = this.baseUrl + endpoint;
-        const response = await fetch(fullEndpoint, {
-            method: 'DELETE',
-            headers: headers
-        });
+    const fullEndpoint = this.baseUrl + endpoint;
+    const response = await fetch(fullEndpoint, {
+        method: 'DELETE',
+        headers: headers
+    });
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || 'An error occurred while deleting data.');
-        }
-
-        return await response.json();
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'An error occurred while deleting data.');
+    }
+    
+    return true;
     }
 }
