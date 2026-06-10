@@ -1,9 +1,53 @@
-!DOCTYPE HTML>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Trabajo Diego</title>
+    <link rel="stylesheet" href="diego.css">
 </head>
 <body>
-    <h1>s</h1>
+
+<div class="container">
+    <h1>Teams</h1>
+    <div class="form-card">
+        <h2 id="form-title">Crear team</h2>
+        <form id="team-form">
+            <input type="hidden" id="team-id" />
+            <div class="form-group">
+                <label for="team-name">Nombre</label>
+                <input type="text" id="team-name" placeholder="Nombre del team" required/>
+            </div>
+            <div class="form-group">
+                <label for="team-description">Descripción</label>
+                <input type="text" id="team-description" placeholder="Descripción"/>
+            </div>
+            <div class="form-buttons">
+                <button type="submit" id="submit-btn">Crear</button>
+                <button type="button" id="cancel-btn" class="btn-secondary">Cancelar</button>
+            </div>
+        </form>
+        <p id="form-message" class="message"></p>
+    </div>
+    <div class="table-card">
+        <h2>Lista de teams</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Miembros</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="teams-table-body">
+                <tr><td colspan="5" class="empty">Cargando...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="module" src="diego.js"></script>
+</body>
+</html>
