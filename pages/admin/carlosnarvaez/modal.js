@@ -1,12 +1,21 @@
 export class Member {
-    constructor(data = {}) {
-        this.id = data.id || '';
-        this.firstName = data.firstName || 'Sin nombre';
-        this.lastName = data.lastName || '';
-        this.role = data.role || 'Miembro';
+    constructor(id = '', firstName = 'Sin nombre', lastName = '', role = 'Miembro') {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = role;
     }
 
-    // Propiedad calculada para simplificar el nombre en la interfaz
+
+    static fromJson(data = {}) {
+        return new Member(
+            data.id || '',
+            data.firstName || 'Sin nombre',
+            data.lastName || '',
+            data.role || 'Miembro'
+        );
+    }
+
     get fullName() {
         return `${this.firstName} ${this.lastName}`.trim();
     }
