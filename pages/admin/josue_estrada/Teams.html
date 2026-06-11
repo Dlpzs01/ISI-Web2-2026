@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teams Page</title>
+
+    <!-- Hoja de estilos -->
+    <link rel="stylesheet" href="./Teams.css">
+</head>
+<body>
+
+    <!-- 
+         HEADER
+ -->
+    <header>
+        <h1>Teams Page</h1>
+        <p>Manage your teams here.</p>
+    </header>
+
+    <!--
+         CREATE TEAM SECTION
+         Formulario para consumir:
+         POST /api/Teams
+ -->
+    <section id="create-team-section">
+
+        <h2>Create New Team</h2>
+
+        <form id="create-team-form">
+
+            <!-- Nombre del equipo -->
+            <div class="form-group">
+                <label for="team-name">
+                    Team Name
+                </label>
+
+                <input
+                    type="text"
+                    id="team-name"
+                    name="teamName"
+                    placeholder="Enter team name"
+                    required
+                >
+            </div>
+
+            <!-- Descripción -->
+            <div class="form-group">
+                <label for="team-description">
+                    Description
+                </label>
+
+                <textarea
+                    id="team-description"
+                    name="description"
+                    rows="4"
+                    placeholder="Enter team description"
+                ></textarea>
+            </div>
+
+            <!-- Botón submit -->
+            <button type="submit" id="create-team-btn">
+                Create Team
+            </button>
+
+        </form>
+
+    </section>
+
+    <!-- 
+         RESPONSE MESSAGE
+         Aquí mostraremos éxito o error
+   -->
+    <section id="message-container">
+
+        <p id="success-message" hidden>
+            Team created successfully.
+        </p>
+
+        <p id="error-message" hidden>
+            Error creating team.
+        </p>
+
+    </section>
+
+    <!-- 
+         TEAMS TABLE
+         Más adelante será llenada con GET
+         /api/Teams
+    = -->
+    <section id="teams-container">
+
+        <h2>Teams List</h2>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Member Count</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody id="teams-table-body">
+
+                <!--
+                    Teams.js agregará filas dinámicamente:
+
+                    <tr>
+                        <td>1</td>
+                        <td>Development Team</td>
+                        <td>Frontend and Backend</td>
+                        <td>8</td>
+                        <td>
+                            Edit | Delete
+                        </td>
+                    </tr>
+                -->
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+    <!--   JAVASCRIPT MODULE -->
+    <script type="module" src="./Teams.js"></script>
+
+</body>
+</html>
