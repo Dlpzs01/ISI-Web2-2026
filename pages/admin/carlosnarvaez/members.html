@@ -2,21 +2,31 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis Miembros del Equipo</title>
+    <style>
+        /* Unos pequeños estilos rápidos para que tus botones principales se vean geniales */
+        #btnGet {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        #btnGet:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
 
     <h2>Panel de Miembros - Carlos Narvaez</h2>
 
     <div style="margin-bottom: 20px;">
-        <input type="number" id="userId" placeholder="ID (Solo para PUT/DELETE)">
-        <input type="text" id="firstName" placeholder="Nombre">
-        <input type="text" id="lastName" placeholder="Apellido">
-        <input type="text" id="role" placeholder="Rol">
-        <br><br>
-        <button id="btnPost">Registrar Miembro</button>
-        <button id="btnPut">Modificar por ID</button>
-        <button id="btnGet">Actualizar Lista</button>
+        <button id="btnGet">Agregar Nuevo Miembro</button>
     </div>
 
     <hr>
@@ -24,6 +34,6 @@
     <h3>Lista de Miembros:</h3>
     <div id="miembros-lista"></div>
 
-   <script src="members.js" type="module"></script>
+    <script src="members.js" type="module"></script>
 </body>
 </html>

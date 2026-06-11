@@ -1,118 +1,154 @@
 
+import { membersService } from "./service.js"; 
 
-// 1. IMPORTAMOS ÚNICAMENTE EL SERVICIO HTTP BASE DE LA APP
-import HttpService from "../../../shared/services/http.service.js";
-
-// 2. RECREAMOS LA CLASE DEL SERVICIO DIRECTAMENTE AQUÍ PARA EVITAR OTROS ARCHIVOS
-class MembersService extends HttpService {
-    // Usamos la ruta exacta del endpoint de miembros del profesor
-endpoint = '/Teams/1/members';
-
-    async getAll() {
-        const json = await super.get(this.endpoint);
-        return json || [];
-    }
-
-    async create(payload) {
-        return await super.post(this.endpoint, payload);
-    }
-
-    async update(userId, payload) {
-        return await super.put(`${this.endpoint}/${userId}`, payload);
-    }
-
-    async delete(userId) {
-        return await super.delete(`${this.endpoint}/${userId}`);
-    }
-}
-
-const service = new MembersService();
-
-// 3. CAPTURA DE LOS INPUTS Y ELEMENTOS DEL HTML
-const txtId = document.getElementById("userId");
-const txtName = document.getElementById("firstName");
-const txtLastName = document.getElementById("lastName");
-const txtRole = document.getElementById("role");
 const contenedor = document.getElementById("miembros-lista");
 
-// 4. FUNCIÓN PARA PINTAR LOS MIEMBROS EN FORMA DE TARJETAS (DIFERENTE AL PROFE)
+// --- FUNCIÓN PARA PINTAR LAS TARJETAS ---
 async function renderizarMiembros() {
     try {
-        const miembros = await service.getAll();
-        contenedor.innerHTML = ""; // Limpiar antes de renderizar
+        const miembros = await membersService.getAll();
+        contenedor.innerHTML = ""; 
 
         if (miembros.length === 0) {
             contenedor.innerHTML = "<p>No hay miembros registrados todavía.</p>";
             return;
         }
 
-        // Iteramos y creamos bloques HTML usando strings (sin createElement)
         miembros.forEach(function(m) {
-            const htmlCard = `
-                <div style="border: 1px solid #000; padding: 10px; margin: 10px 0; max-width: 300px;">
-                    <p><b>ID:</b> ${m.id}</p>
-                    <p><b>Nombre:</b> ${m.firstName} ${m.lastName}</p>
-                    <p><b>Rol:</b> ${m.role}</p>
-                    <button class="btn-borrar" data-id="${m.id}">Eliminar</button>
-                </div>
-            `;
-            contenedor.innerHTML += htmlCard;
-        });
+            const card = document.createElement("div");
+            card.style.border = "1px solid #ccc";
+            card.style.padding = "15px";
+            card.style.margin = "10px 0";
+            card.style.maxWidth = "300px";
+            card.style.borderRadius = "8px";
 
-        // Asignamos la función de eliminar a cada botón de las tarjetas
-        const botonesBorrar = document.querySelectorAll(".btn-borrar");
-        botonesBorrar.forEach(function(boton) {
-            boton.addEventListener("click", async function() {
-                const id = boton.getAttribute("data-id");
-                try {
-                    await service.delete(id);
-                    alert("Miembro con ID " + id + " eliminado con éxito.");
-                    renderizarMiembros(); // Recargar la lista automáticamente
-                } catch (err) {
-                    alert("Error al eliminar: " + err.message);
+            
+            card.innerHTML = `
+                <p><b>ID:</b> ${m.id}</p>
+                <p><b>Nombre Completo:</b> ${m.fullName}</p>
+                <p><b>Rol:</b> ${m.role}</p>
+            `;
+
+            const botonEditar = document.createElement("button");
+            botonEditar.textContent = "Editar";
+            botonEditar.style.marginRight = "8px";
+            botonEditar.addEventListener("click", function() {
+                abrirModal(m);
+            });
+
+            
+            const botonBorrar = document.createElement("button");
+            botonBorrar.textContent = "Eliminar";
+            botonBorrar.style.backgroundColor = "#ff4d4d";
+            botonBorrar.style.color = "white";
+
+            botonBorrar.addEventListener("click", async function() {
+                if (confirm(`¿Estás seguro de que deseas eliminar a ${m.firstName}?`)) {
+                    try {
+                        await membersService.delete(m.id);
+                        alert("Miembro eliminado con éxito.");
+                        renderizarMiembros(); 
+                    } catch (err) {
+                        alert("Error al eliminar: " + err.message);
+                    }
                 }
             });
+
+            card.appendChild(botonEditar);
+            card.appendChild(botonBorrar);
+            contenedor.appendChild(card);
         });
 
     } catch (error) {
-        contenedor.innerHTML = "<p style='color:red;'>Error al conectar con la API. Revisa que el backend en Visual Studio esté corriendo.</p>";
+        contenedor.innerHTML = "<p style='color:red;'>Error al conectar con la API.</p>";
     }
 }
 
-// 5. EVENTOS DE LOS BOTONES DEL FORMULARIO
-document.getElementById("btnGet").addEventListener("click", renderizarMiembros);
+// --- FUNCIÓN DEL MODAL INTEGRADO ---
+function abrirModal(miembroAEditar = null) {
+    const modalExistente = document.getElementById("modal-dinamico");
+    if (modalExistente) modalExistente.remove();
 
-document.getElementById("btnPost").addEventListener("click", async function() {
-    try {
-        const payload = {
-            firstName: txtName.value,
-            lastName: txtLastName.value,
-            role: txtRole.value
-        };
-        await service.create(payload);
-        alert("¡Miembro registrado correctamente!");
-        renderizarMiembros(); // Recargar lista
-    } catch (err) {
-        alert("Error al registrar: " + err.message);
-    }
-});
+    const modalBg = document.createElement("div");
+    modalBg.id = "modal-dinamico";
+    modalBg.style.position = "fixed";
+    modalBg.style.top = "0";
+    modalBg.style.left = "0";
+    modalBg.style.width = "100%";
+    modalBg.style.height = "100%";
+    modalBg.style.backgroundColor = "rgba(0,0,0,0.5)";
+    modalBg.style.display = "flex";
+    modalBg.style.justifyContent = "center";
+    modalBg.style.alignItems = "center";
+    modalBg.style.zIndex = "1000";
 
-document.getElementById("btnPut").addEventListener("click", async function() {
-    try {
-        if (!txtId.value) return alert("Por favor, escribe un ID en la primera caja para modificar.");
+    const modalContent = document.createElement("div");
+    modalContent.style.backgroundColor = "white";
+    modalContent.style.padding = "20px";
+    modalContent.style.borderRadius = "8px";
+    modalContent.style.width = "300px";
+
+    const tituloModal = miembroAEditar ? "Modificar Miembro" : "Registrar Miembro";
+
+    modalContent.innerHTML = `
+        <h3 style="margin-top:0;">${tituloModal}</h3>
         
-        const payload = {
-            firstName: txtName.value,
-            lastName: txtLastName.value,
-            role: txtRole.value
-        };
-        await service.update(txtId.value, payload);
-        alert("¡Miembro modificado con éxito!");
-        renderizarMiembros(); // Recargar lista
+        <label>Nombre:</label><br>
+        <input type="text" id="modal-firstName" value="${miembroAEditar ? miembroAEditar.firstName : ''}" style="width:100%; margin-bottom:10px;"><br>
+        
+        <label>Apellido:</label><br>
+        <input type="text" id="modal-lastName" value="${miembroAEditar ? miembroAEditar.lastName : ''}" style="width:100%; margin-bottom:10px;"><br>
+        
+        <label>Rol:</label><br>
+        <input type="text" id="modal-role" value="${miembroAEditar ? miembroAEditar.role : ''}" style="width:100%; margin-bottom:20px;"><br>
+        
+        <div style="text-align: right;">
+            <button id="modal-btnCancelar" style="margin-right:10px;">Cancelar</button>
+            <button id="modal-btnGuardar" style="background-color:#4CAF50; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">Guardar</button>
+        </div>
+    `;
+
+    modalBg.appendChild(modalContent);
+    document.body.appendChild(modalBg);
+
+    document.getElementById("modal-btnCancelar").addEventListener("click", () => modalBg.remove());
+
+document.getElementById("modal-btnGuardar").addEventListener("click", async function() {
+    const firstNameVal = document.getElementById("modal-firstName").value.trim();
+    const lastNameVal = document.getElementById("modal-lastName").value.trim();
+    const roleVal = document.getElementById("modal-role").value.trim();
+
+    if (!firstNameVal || !lastNameVal || !roleVal) {
+        alert("Por favor, rellene todos los campos (Nombre, Apellido y Rol). No se permiten campos vacíos.");
+        return; 
+    }
+
+    const payload = {
+        firstName: firstNameVal,
+        lastName: lastNameVal,
+        role: roleVal
+    };
+
+    try {
+        if (miembroAEditar) {
+            await membersService.update(miembroAEditar.id, payload);
+            alert("¡Miembro modificado con éxito!");
+        } else {
+            await membersService.create(payload);
+            alert("¡Miembro registrado correctamente!");
+        }
+        modalBg.remove(); 
+        renderizarMiembros(); 
     } catch (err) {
-        alert("Error al modificar: " + err.message);
+        alert("Error al guardar: " + err.message);
     }
 });
+}
 
-// Carga inicial automática al abrir la pantalla
+const btnAgregar = document.getElementById("btnGet"); 
+if (btnAgregar) {
+    btnAgregar.textContent = "Agregar Nuevo Miembro"; 
+    btnAgregar.addEventListener("click", () => abrirModal());
+}
+
 renderizarMiembros();
