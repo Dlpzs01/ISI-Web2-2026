@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Cards</title>
+
+    <link rel="stylesheet" href="./Cards.css">
+</head>
+<body>
+
+    <main class="container">
+
+        <header class="page-header">
+            <h1>Listado de Cards</h1>
+
+            <button id="btn-create-card">
+                Nueva Card
+            </button>
+        </header>
+
+        <section class="table-container">
+
+            <table class="cards-table">
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Título</th>
+                        <th>Descripción</th>
+                        <th>Estado</th>
+                        <th>Fecha Creación</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody id="cards-table-body">
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+        <div id="message-container"></div>
+
+    </main>
+
+    <script type="module" src="./Cards.js"></script>
+
+</body>
+</html>
