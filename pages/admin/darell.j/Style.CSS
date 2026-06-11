@@ -1,0 +1,98 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial;
+}
+
+body {
+    background-color: rgb(248, 245, 232);
+    padding: 20px;
+}
+
+h1 {
+    color:  rgba(208, 165, 22, 0.829);
+    margin-bottom: 10px;
+
+}
+
+h3{
+    color:  rgba(208, 165, 22, 0.829);
+    margin-bottom: 10px;
+    position: relative;
+    left: 55px;
+}
+
+input {
+    display: block;
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid rgba(179, 131, 43, 0.823);
+    width: 200px;
+    color: rgb(200, 155, 9);
+     border-radius: 6px;
+}
+
+button {
+    background-color: rgb(200, 155, 9);
+    border: 1px solid  rgb(200, 155, 9);
+    border-radius: 6px;
+    padding: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+      color: white;
+      transition: 3s ease;
+}
+
+table {
+    border-collapse: collapse;
+    margin-top: 10px;
+    width: 60%;
+      border-radius: 7px;
+    overflow: hidden;
+}
+
+th{
+color:  rgb(255, 254, 253);
+ padding: 5px;
+ text-align: center;
+}
+
+
+table, th, td {
+    border: 1px solid black;
+
+}
+
+tr{
+    background-color: rgba(146, 113, 4, 0.67);
+}
+
+ td {
+    padding: 5px;
+    text-align: left;
+}
+
+td button {
+    margin-right: 5px;
+    padding: 3px;
+}
+
+td{
+    color: rgb(200, 155, 9);
+}
+
+button:hover {
+    background-color: rgb(232, 87, 3);
+    transition: 3s ease;
+    color: white;
+}
+
+/*Icono a la par del Name/Label - (Color label) */
+.color-icon{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #000;
+}
