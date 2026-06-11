@@ -1,7 +1,7 @@
 export default class Card {
-    constructor(id, name, description, teamId) {
+    constructor(id, title, description, teamId) {
         this.id = id;
-        this.name = name;
+        this.title = title;
         this.description = description;
         this.teamId = teamId;
     }

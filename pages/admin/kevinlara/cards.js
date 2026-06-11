@@ -1,6 +1,5 @@
 import CardsService from "./cards.service.js";
-import Card from "../../../shared/models/cards.model.js";
-//hacemos las importaciones
+
 
 const service = new CardsService();
 const tbody = document.getElementById('cardsTableBody');
@@ -10,25 +9,49 @@ const loadBtn = document.getElementById('loadBtn');
 // Función para listar
 async function loadCards(teamId) {
     const cards = await service.getAll(teamId);
-    tbody.innerHTML = cards.map(c => `
-        <tr>
-            <td>${c.id}</td>
-            <td>${c.title}</td>
-            <td>    
-            <button onclick="window.editCard(${c.id}, '${c.title}', '${c.description}', '${c.etag || '*'}')">Editar</button>
-                <button onclick="window.deleteCard('${teamId}', '${c.id}')">Eliminar</button>
-            </td>
-        </tr>
-    `).join('');
-}
+    
+    
+    tbody.innerHTML = '';
 
+    cards.forEach(c => {
+        const tr = document.createElement('tr');
+
+        // ID
+        const tdId = document.createElement('td');
+        tdId.textContent = c.id;
+        tr.appendChild(tdId);
+
+        // Nombre
+        const tdTitle = document.createElement('td');
+        tdTitle.textContent = c.title;
+        tr.appendChild(tdTitle);
+
+        // Acciones
+        const tdActions = document.createElement('td');
+        
+        // Botón Editar
+        const editBtn = document.createElement('button');
+        editBtn.textContent = 'Editar';
+        editBtn.addEventListener('click', () => window.editCard(c.id, c.title, c.description, c.etag || '*'));
+        
+        // Botón Eliminar
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Eliminar';
+        deleteBtn.addEventListener('click', () => window.deleteCard(teamId, c.id));
+        
+        tdActions.appendChild(editBtn);
+        tdActions.appendChild(deleteBtn);
+        tr.appendChild(tdActions);
+
+        tbody.appendChild(tr);
+    });
+}
 
 // Evento Crear
 cardForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const teamId = document.getElementById('teamId').value;
     
-    // Aquí estamos creando un objeto plano con la clave 'title' en lugar de 'name'
     const newCard = {
         id: null,
         title: document.getElementById('cardName').value, 
