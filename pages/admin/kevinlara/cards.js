@@ -1,6 +1,6 @@
 import CardsService from "./cards.service.js";
-import Card from "../../../shared/models/cards.model.js";//hacemos las impotaciones
-
+import Card from "../../../shared/models/cards.model.js";
+//hacemos las importaciones
 
 const service = new CardsService();
 const tbody = document.getElementById('cardsTableBody');

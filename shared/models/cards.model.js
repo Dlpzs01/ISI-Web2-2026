@@ -5,4 +5,13 @@ export default class Card {
         this.description = description;
         this.teamId = teamId;
     }
+//Metodo para mapear el JSON  
+    static fromJson(json) {
+        return new Card(
+            json.id, 
+            json.title, 
+            json.description,
+            json.teamId
+        );
+    }
 }

@@ -1,44 +1,31 @@
 import HttpService from "../../../shared/services/http.service.js";
+import Card from "../../../shared/models/cards.model.js"; 
 
 export default class CardsService extends HttpService {
 
     async getAll(teamId) {
-        return await super.get(`/Teams/${teamId}/cards`);
+        //obtenemos los datos crudos de la Api
+        const data = await super.get(`/Teams/${teamId}/cards`);
+        // Aqui es donde se realiza el mapeo 
+        return data.map(item => Card.fromJson(item));
     }
 
     async getById(teamId, id) {
-        return await super.get(`/Teams/${teamId}/cards/${id}`);
+        const data = await super.get(`/Teams/${teamId}/cards/${id}`);
+        return Card.fromJson(data);
     }
 
     async create(teamId, cardData) {
-        return await super.post(`/Teams/${teamId}/cards`, cardData);
+        const data = await super.post(`/Teams/${teamId}/cards`, cardData);
+        return Card.fromJson(data);
     }
 
     async update(teamId, id, cardData, etag) {
-        return await super.patch(`/Teams/${teamId}/cards/${id}`, cardData, {
-    
-        });
+        const data = await super.put(`/Teams/${teamId}/cards/${id}`, cardData);
+        return Card.fromJson(data);
     }
 
     async delete(teamId, id) {
-        const response = await fetch(`https://localhost:7286/api/Teams/${teamId}/cards/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('token')).token,
-                'Content-Type': 'application/json'
-            }
-        });
-
-        
-        if (response.status === 204) {
-            return null;
-        }
-
-        // Si hay un error distinto, lanzamos excepción
-        if (!response.ok) {
-            throw new Error('No se pudo eliminar el recurso');
-        }
-
-        return await response.json();
+        return await super.delete(`/Teams/${teamId}/cards/${id}`);
     }
 }
