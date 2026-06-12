@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Equipos - BoardForge</title>
+</head>
+<body>
+
+  <h1>Gestión de Equipos</h1>
+
+  <button onclick="Window.location.href='../../pages/login/index.html'">Login</button>
+
+  <hr>
+
+  <h2>Equipos</h2>
+  <button id="btn-nuevo" onclick="abrirFormularioNuevo()">Nuevo Equipo</button>
+  <button onclick="cargarEquipos()">Actualizar</button>
+  <p id="msg-equipos"></p>
+
+  <table border="1" cellpadding="5">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Miembros</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="tabla-body"></tbody>
+  </table>
+
+  <hr>
+
+  <div id="seccion-formulario" style="display:none;">
+    <h2 id="titulo-form">Nuevo Equipo</h2>
+    <input type="hidden" id="campo-id" />
+    Nombre: <input type="text" id="campo-nombre" /></label><br><br>
+    Descripción: <input type="text" id="campo-descripcion" /></label><br><br>
+    <button onclick="guardarEquipo()">Guardar</button>
+    <button onclick="cerrarFormulario()">Cancelar</button>
+    <p id="msg-form"></p>
+  </div>
+
+  <script type="module" src="GestióndeEquipos.js"></script>
+</body>
+</html>
