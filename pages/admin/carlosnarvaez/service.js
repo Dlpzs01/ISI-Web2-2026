@@ -1,29 +1,35 @@
+import HttpService from "../../../shared/services/http.service.js"; 
+import { Member } from "./modal.js"; 
 
-    import HttpService from "../../../shared/services/http.service.js"; 
-    import { Member } from "./modal.js"; 
+class MembersService extends HttpService {
+    endpoint = '/Teams/1000/members';
 
-    class MembersService extends HttpService {
-        endpoint = '/Teams/1/members';
-
-        async getAll() {
-            const json = await super.get(this.endpoint);
-            if (!json || !Array.isArray(json)) return [];
-            
-            
-            return json.map(item => Member.fromJson(item));
-        }
-
-        async create(payload) { 
-            return await super.post(this.endpoint, payload); 
+    async getAll() {
+        const respuesta = await super.get(this.endpoint);
+        
+        if (!respuesta || !Array.isArray(respuesta)) {
+            return [];
         }
         
-        async update(userId, payload) { 
-            return await super.put(`${this.endpoint}/${userId}`, payload); 
-        }
-        
-        async delete(userId) { 
-            return await super.delete(`${this.endpoint}/${userId}`); 
-        }
+        return respuesta;
     }
 
-    export const membersService = new MembersService();
+    async create(payload) { 
+        const resultado = await super.post(this.endpoint, payload); 
+        return resultado;
+    }
+    
+    async update(userId, payload) { 
+        const urlDestino = `${this.endpoint}/${userId}`; 
+        const resultado = await super.put(urlDestino, payload); 
+        return resultado;
+    }
+    
+    async delete(userId) { 
+        const urlDestino = `${this.endpoint}/${userId}`;
+        const resultado = await super.delete(urlDestino); 
+        return resultado;
+    }
+}
+
+export const membersService = new MembersService();

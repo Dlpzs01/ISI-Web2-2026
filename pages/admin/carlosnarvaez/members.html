@@ -5,19 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis Miembros del Equipo</title>
     <style>
-        /* Unos pequeños estilos rápidos para que tus botones principales se vean geniales */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
         #btnGet {
             background-color: #007bff;
             color: white;
             border: none;
-            padding: 10px 15px;
+            padding: 10px 20px;
             border-radius: 5px;
             font-size: 14px;
             cursor: pointer;
             font-weight: bold;
+            transition: background 0.2s;
         }
+
         #btnGet:hover {
             background-color: #0056b3;
+        }
+
+        .acciones-barra {
+            margin-bottom: 25px;
+        }
+
+        #miembros-lista {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -25,13 +44,14 @@
 
     <h2>Panel de Miembros - Carlos Narvaez</h2>
 
-    <div style="margin-bottom: 20px;">
+    <div class="acciones-barra">
         <button id="btnGet">Agregar Nuevo Miembro</button>
     </div>
 
     <hr>
 
-    <h3>Lista de Miembros:</h3>
+    <h3>Lista de Miembros Registrados:</h3>
+    
     <div id="miembros-lista"></div>
 
     <script src="members.js" type="module"></script>

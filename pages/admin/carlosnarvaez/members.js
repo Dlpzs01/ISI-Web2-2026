@@ -1,154 +1,159 @@
-
 import { membersService } from "./service.js"; 
 
-const contenedor = document.getElementById("miembros-lista");
+const listaContenedor = document.getElementById("miembros-lista");
 
-// --- FUNCIÓN PARA PINTAR LAS TARJETAS ---
-async function renderizarMiembros() {
+async function cargarMiembros() {
     try {
-        const miembros = await membersService.getAll();
-        contenedor.innerHTML = ""; 
+        const datos = await membersService.getAll();
+        listaContenedor.innerHTML = ""; 
 
-        if (miembros.length === 0) {
-            contenedor.innerHTML = "<p>No hay miembros registrados todavía.</p>";
+        if (datos.length === 0) {
+            listaContenedor.innerHTML = "<p>No hay miembros registrados todavía.</p>";
             return;
         }
 
-        miembros.forEach(function(m) {
-            const card = document.createElement("div");
-            card.style.border = "1px solid #ccc";
-            card.style.padding = "15px";
-            card.style.margin = "10px 0";
-            card.style.maxWidth = "300px";
-            card.style.borderRadius = "8px";
+        datos.forEach(function(miembro) {
+            const idReal = miembro.userId || miembro.UserId || miembro.id;
+            const rolReal = miembro.role || miembro.Role || "Miembro";
 
+            const tarjeta = document.createElement("div");
+            tarjeta.style.border = "1px solid #ccc";
+            tarjeta.style.padding = "15px";
+            tarjeta.style.margin = "10px 0";
+            tarjeta.style.maxWidth = "300px";
+            tarjeta.style.borderRadius = "8px";
+            tarjeta.style.backgroundColor = "white";
             
-            card.innerHTML = `
-                <p><b>ID:</b> ${m.id}</p>
-                <p><b>Nombre Completo:</b> ${m.fullName}</p>
-                <p><b>Rol:</b> ${m.role}</p>
+            tarjeta.innerHTML = `
+                <p><strong>ID Usuario:</strong> ${idReal}</p>
+                <p><strong>Rol:</strong> ${rolReal}</p>
             `;
 
-            const botonEditar = document.createElement("button");
-            botonEditar.textContent = "Editar";
-            botonEditar.style.marginRight = "8px";
-            botonEditar.addEventListener("click", function() {
-                abrirModal(m);
+            const btnEditar = document.createElement("button");
+            btnEditar.textContent = "Editar";
+            btnEditar.style.marginRight = "8px";
+            btnEditar.style.cursor = "pointer";
+            btnEditar.addEventListener("click", function() {
+                abrirModalMiembro(miembro);
             });
 
-            
-            const botonBorrar = document.createElement("button");
-            botonBorrar.textContent = "Eliminar";
-            botonBorrar.style.backgroundColor = "#ff4d4d";
-            botonBorrar.style.color = "white";
+            const btnEliminar = document.createElement("button");
+            btnEliminar.textContent = "Eliminar";
+            btnEliminar.style.backgroundColor = "#ff4d4d";
+            btnEliminar.style.color = "white";
+            btnEliminar.style.border = "none";
+            btnEliminar.style.padding = "2px 8px";
+            btnEliminar.style.borderRadius = "4px";
+            btnEliminar.style.cursor = "pointer";
 
-            botonBorrar.addEventListener("click", async function() {
-                if (confirm(`¿Estás seguro de que deseas eliminar a ${m.firstName}?`)) {
+            btnEliminar.addEventListener("click", async function() {
+                if (confirm(`¿Estás seguro de que deseas eliminar al usuario con ID ${idReal}?`)) {
                     try {
-                        await membersService.delete(m.id);
+                        await membersService.delete(idReal);
                         alert("Miembro eliminado con éxito.");
-                        renderizarMiembros(); 
-                    } catch (err) {
-                        alert("Error al eliminar: " + err.message);
+                        cargarMiembros(); 
+                    } catch (error) {
+                        alert("Error al eliminar: " + error.message);
                     }
                 }
             });
 
-            card.appendChild(botonEditar);
-            card.appendChild(botonBorrar);
-            contenedor.appendChild(card);
-        });
+            tarjeta.appendChild(btnEditar);
+            tarjeta.appendChild(btnEliminar);
+            listaContenedor.appendChild(tarjeta);
+        }); 
 
-    } catch (error) {
-        contenedor.innerHTML = "<p style='color:red;'>Error al conectar con la API.</p>";
+    } catch (err) {
+        listaContenedor.innerHTML = "<p style='color:red;'>Error al conectar con la API.</p>";
     }
 }
 
-// --- FUNCIÓN DEL MODAL INTEGRADO ---
-function abrirModal(miembroAEditar = null) {
-    const modalExistente = document.getElementById("modal-dinamico");
-    if (modalExistente) modalExistente.remove();
+function abrirModalMiembro(registro = null) {
+    const modalViejo = document.getElementById("modal-dinamico");
+    if (modalViejo) modalViejo.remove();
 
-    const modalBg = document.createElement("div");
-    modalBg.id = "modal-dinamico";
-    modalBg.style.position = "fixed";
-    modalBg.style.top = "0";
-    modalBg.style.left = "0";
-    modalBg.style.width = "100%";
-    modalBg.style.height = "100%";
-    modalBg.style.backgroundColor = "rgba(0,0,0,0.5)";
-    modalBg.style.display = "flex";
-    modalBg.style.justifyContent = "center";
-    modalBg.style.alignItems = "center";
-    modalBg.style.zIndex = "1000";
+    const idRegistroActual = registro ? (registro.userId || registro.UserId || registro.id) : null;
 
-    const modalContent = document.createElement("div");
-    modalContent.style.backgroundColor = "white";
-    modalContent.style.padding = "20px";
-    modalContent.style.borderRadius = "8px";
-    modalContent.style.width = "300px";
+    const fondoModal = document.createElement("div");
+    fondoModal.id = "modal-dinamico";
+    fondoModal.style.position = "fixed";
+    fondoModal.style.top = "0";
+    fondoModal.style.left = "0";
+    fondoModal.style.width = "100%";
+    fondoModal.style.height = "100%";
+    fondoModal.style.backgroundColor = "rgba(0,0,0,0.5)";
+    fondoModal.style.display = "flex";
+    fondoModal.style.justifyContent = "center";
+    fondoModal.style.alignItems = "center";
+    fondoModal.style.zIndex = "1000";
 
-    const tituloModal = miembroAEditar ? "Modificar Miembro" : "Registrar Miembro";
+    const contenidoModal = document.createElement("div");
+    contenidoModal.style.backgroundColor = "white";
+    contenidoModal.style.padding = "20px";
+    contenidoModal.style.borderRadius = "8px";
+    contenidoModal.style.width = "300px";
 
-    modalContent.innerHTML = `
-        <h3 style="margin-top:0;">${tituloModal}</h3>
+    const titulo = registro ? "Modificar Miembro" : "Registrar Miembro";
+
+    contenidoModal.innerHTML = `
+        <h3 style="margin-top:0;">${titulo}</h3>
         
-        <label>Nombre:</label><br>
-        <input type="text" id="modal-firstName" value="${miembroAEditar ? miembroAEditar.firstName : ''}" style="width:100%; margin-bottom:10px;"><br>
-        
-        <label>Apellido:</label><br>
-        <input type="text" id="modal-lastName" value="${miembroAEditar ? miembroAEditar.lastName : ''}" style="width:100%; margin-bottom:10px;"><br>
+        <label>ID del Usuario:</label><br>
+        <input type="number" id="txt-userid" value="${idRegistroActual ? idRegistroActual : ''}" style="width:100%; margin-bottom:10px;" ${registro ? 'disabled' : ''}><br>
         
         <label>Rol:</label><br>
-        <input type="text" id="modal-role" value="${miembroAEditar ? miembroAEditar.role : ''}" style="width:100%; margin-bottom:20px;"><br>
+        <input type="text" id="txt-rol" value="${registro ? (registro.role || registro.Role || '') : ''}" style="width:100%; margin-bottom:20px;" placeholder="Ej: Owner o Miembro"><br>
         
         <div style="text-align: right;">
-            <button id="modal-btnCancelar" style="margin-right:10px;">Cancelar</button>
-            <button id="modal-btnGuardar" style="background-color:#4CAF50; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">Guardar</button>
+            <button id="btn-cancelar" style="margin-right:10px;">Cancelar</button>
+            <button id="btn-guardar" style="background-color:#4CAF50; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">Guardar</button>
         </div>
     `;
 
-    modalBg.appendChild(modalContent);
-    document.body.appendChild(modalBg);
+    fondoModal.appendChild(contenidoModal);
+    document.body.appendChild(fondoModal);
 
-    document.getElementById("modal-btnCancelar").addEventListener("click", () => modalBg.remove());
+    document.getElementById("btn-cancelar").addEventListener("click", function() {
+        fondoModal.remove();
+    });
 
-document.getElementById("modal-btnGuardar").addEventListener("click", async function() {
-    const firstNameVal = document.getElementById("modal-firstName").value.trim();
-    const lastNameVal = document.getElementById("modal-lastName").value.trim();
-    const roleVal = document.getElementById("modal-role").value.trim();
+    document.getElementById("btn-guardar").addEventListener("click", async function() {
+        const userIdVal = parseInt(document.getElementById("txt-userid").value.trim());
+        const rolVal = document.getElementById("txt-rol").value.trim();
 
-    if (!firstNameVal || !lastNameVal || !roleVal) {
-        alert("Por favor, rellene todos los campos (Nombre, Apellido y Rol). No se permiten campos vacíos.");
-        return; 
-    }
-
-    const payload = {
-        firstName: firstNameVal,
-        lastName: lastNameVal,
-        role: roleVal
-    };
-
-    try {
-        if (miembroAEditar) {
-            await membersService.update(miembroAEditar.id, payload);
-            alert("¡Miembro modificado con éxito!");
-        } else {
-            await membersService.create(payload);
-            alert("¡Miembro registrado correctamente!");
+        if (!userIdVal || !rolVal) {
+            alert("Por favor, rellene todos los campos.");
+            return; 
         }
-        modalBg.remove(); 
-        renderizarMiembros(); 
-    } catch (err) {
-        alert("Error al guardar: " + err.message);
-    }
-});
+
+        const datosEnviar = {
+            userId: userIdVal,
+            role: rolVal
+        };
+
+        try {
+            if (registro && idRegistroActual) {
+                await membersService.update(idRegistroActual, datosEnviar);
+                alert("¡Miembro modificado con éxito!");
+            } else {
+                await membersService.create(datosEnviar);
+                alert("¡Miembro registrado correctamente!");
+            }
+            
+            fondoModal.remove(); 
+            cargarMiembros(); 
+        } catch (error) {
+            alert("Error al guardar: " + error.message);
+        }
+    });
 }
 
-const btnAgregar = document.getElementById("btnGet"); 
-if (btnAgregar) {
-    btnAgregar.textContent = "Agregar Nuevo Miembro"; 
-    btnAgregar.addEventListener("click", () => abrirModal());
+const btnNuevo = document.getElementById("btnGet"); 
+if (btnNuevo) {
+    btnNuevo.textContent = "Agregar Nuevo Miembro"; 
+    btnNuevo.addEventListener("click", function() {
+        abrirModalMiembro();
+    });
 }
 
-renderizarMiembros();
+cargarMiembros();

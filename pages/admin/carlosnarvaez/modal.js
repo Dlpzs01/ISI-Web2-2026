@@ -6,7 +6,7 @@ export class Member {
         this.role = role;
     }
 
-
+    
     static fromJson(data = {}) {
         return new Member(
             data.id || '',
