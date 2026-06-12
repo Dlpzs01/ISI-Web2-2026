@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Teams - Norling Salinas</title>
+    <link rel="stylesheet" href="norling.css">
+</head>
+<body>
+
+    <h1>Gestión de Equipos</h1>
+
+    <div class="formulario">
+        <input
+            type="text"
+            id="teamName"
+            placeholder="Nombre del equipo">
+
+        <input
+            type="text"
+            id="teamDescription"
+            placeholder="Descripción del equipo">
+
+        <button type="button" onclick="guardarTeam()">
+            Guardar
+        </button>
+    </div>
+
+    <br>
+
+    <input
+        type="text"
+        id="buscar"
+        placeholder="Buscar equipo..."
+        onkeyup="buscarTeam()">
+
+    <p id="mensaje"></p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody id="teamsBody"></tbody>
+    </table>
+
+    <script type="module" src="Norling.js"></script>
+
+</body>
+</html>

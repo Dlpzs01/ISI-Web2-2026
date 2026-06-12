@@ -1,0 +1,40 @@
+body{
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1{
+    text-align: center;
+}
+
+.formulario{
+    margin-bottom: 15px;
+}
+
+input{
+    padding: 8px;
+    margin: 5px;
+}
+
+button{
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th,
+td{
+    border: 1px solid #000;
+    padding: 10px;
+    text-align: center;
+}
+
+#mensaje{
+    font-weight: bold;
+    margin-top: 10px;
+}
