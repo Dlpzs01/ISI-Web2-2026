@@ -92,4 +92,31 @@ export default class HttpService {
 
         return await response.json();
     }
-}
+
+    // patch
+async patch(endpoint, body) {
+    const token = TokenResponse.loadFromLocalStorage();
+
+    const headers = { 'Content-Type': 'application/json' };
+    if (token !== null && token.isValid()) {
+        headers['Authorization'] = `Bearer ${token.token}`;
+    }
+
+    const fullEndpoint = this.baseUrl + endpoint;
+
+    const response = await fetch(fullEndpoint, {
+        method: 'PATCH',
+        headers: headers,
+        body: JSON.stringify(body)
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(
+            errorData.message ||
+            'An error occurred while patching data.'
+        );
+    }
+
+    return await response.json();
+}}

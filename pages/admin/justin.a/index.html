@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD Cards</title>
+</head>
+<body>
+
+    <h1>CRUD Cards JA</h1>
+
+    <input type="number" id="teamId" placeholder="Team ID">
+    <br><br>
+
+    <input type="text" id="title" placeholder="Título">
+    <br><br>
+
+    <input type="text" id="description" placeholder="Descripción">
+    <br><br>
+
+    <button onclick="crearCard()">Crear Card</button>
+    <button onclick="buscarCards()">Buscar Cards</button>
+
+    <hr>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tablaCards"></tbody>
+    </table>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
