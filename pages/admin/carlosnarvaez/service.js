@@ -1,5 +1,6 @@
 import HttpService from "../../../shared/services/http.service.js"; 
-import { Member } from "./modal.js"; 
+import { MemberResponse } from "./member-response.model.js";
+import { MemberRequest } from "./member-request.js";
 
 class MembersService extends HttpService {
     endpoint = '/Teams/1000/members';
@@ -11,16 +12,18 @@ class MembersService extends HttpService {
             return [];
         }
         
-        return respuesta;
+        return respuesta.map(elemento => MemberResponse.fromJson(elemento));
     }
 
-    async create(payload) { 
+    async create(memberRequest) { 
+        const payload = memberRequest instanceof MemberRequest ? memberRequest.toJson() : memberRequest;
         const resultado = await super.post(this.endpoint, payload); 
         return resultado;
     }
     
-    async update(userId, payload) { 
+    async update(userId, memberRequest) { 
         const urlDestino = `${this.endpoint}/${userId}`; 
+        const payload = memberRequest instanceof MemberRequest ? memberRequest.toJson() : memberRequest;
         const resultado = await super.put(urlDestino, payload); 
         return resultado;
     }
