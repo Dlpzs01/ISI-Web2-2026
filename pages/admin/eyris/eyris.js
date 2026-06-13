@@ -1,4 +1,4 @@
-import TeamsService from "./service.js";
+import TeamsService from ".service.js";
 import TeamRequest from "../shared/models/request/team.request.js";
 
 const teamsService = new TeamsService();
