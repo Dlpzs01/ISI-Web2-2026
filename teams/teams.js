@@ -9,13 +9,13 @@ async function loadTeams() {
 
 async function buildTable() {
     const teams = await loadTeams();
-    const tableBody = document.getElementById('teams-table-body');
-    tableBody.innerHTML = '';
-
+    const tableBody = document.getElementById('teams-table-body'); 
+    tableBody.innerHTML = '';                                                                                                                                                                                                                        
+    
     teams.forEach(team => {
         const row = document.createElement('tr');
         const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete';
+        deleteButton.textContent = 'Delete'; 
 
         deleteButton.addEventListener('click', async () => {
             // await teamsService

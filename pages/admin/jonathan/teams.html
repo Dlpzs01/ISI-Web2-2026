@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Equipos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="page-shell">
+           <section class="hero-card">
+            <div class ="agregar-equipo">
+                <h1>Administración de equipos</h1>
+            </div>
+            <div class="class-equipo">
+                  <h2>Agregar Equipo</h2>
+            </div>
+            <form id="form-equipo">
+                <div class="form-group">
+                  <label for="name">nombre del equipo</label>
+                  <input type="text" id="name" name="name" placeholder="Escribe su nombre"required>
+                </div>
+
+                <div class="form-descripcion">
+                  <label for="descripcion">descripción</label>
+                  <input type="text" id="descripcion" name="descripcion" placeholder="Escribe su descripción" required>
+                </div>          
+                
+                <div class="submit-row">
+                  <button type="submit">Agregar equipo</button>
+                </div>                 
+                                                                                        
+            </form>
+
+        </section>                                                                    
+        <section class="hero-card">
+            <div class="hero-copy">
+                <h2>Lista de Equipos</h2>
+                <p class="subtitle">Conexión de obtener y listado de equipos.</p>
+            </div>                                  
+                                                                              
+            <form class="delete-panel">
+                <label for="teamId">ID del equipo para obtener</label>
+                <div class="Obtener-controls">
+                    <input type="text" id="teamId" name="teamId" placeholder="Escribe el ID">
+                    <button id="searchTeamButton" type="button">Obtener equipo</button>
+                </div>
+            </form>
+        </section>                                                                         
+                                                     
+                                            
+       <section id="teams-container" class="table-card" aria-label="Listado de equipos">
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>description</th>        
+                    <th>memberCount</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="teams-table-body">                 
+                <!-- Las filas de equipos se insertarán aquí dinámicamente con JavaScript -->
+                </tbody>
+        </table>
+    </div>                                                       
+</section>                                                                           
+    </main>                                                 
+    <script type="module" src="teams.js"></script>
+</body>
+</html>       
+                                                                                                                              
