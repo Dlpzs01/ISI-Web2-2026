@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestión de Tarjetas</title>
+    <link rel="stylesheet" href="Style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Mis Tarjetas</h1>
+
+      <form id="cardForm">
+        <input type="hidden" id="cardId" />
+        <input type="hidden" id="cardEtag" />
+
+        <label for="teamId">ID del Equipo</label>
+        <input type="text" id="teamId" placeholder="ID del Equipo" required />
+
+        <label for="cardName">Nombre</label>
+        <input type="text" id="cardName" placeholder="Nombre" required />
+
+        <label for="cardDesc">Descripción</label>
+        <input type="text" id="cardDesc" placeholder="Descripción" />
+
+        <button type="submit">Agregar</button>
+      </form>
+
+      <button id="loadBtn">Cargar Tarjetas</button>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="cardsTableBody"></tbody>
+      </table>
+    </div>
+
+    <script src="./cards.js" type="module"></script>
+  </body>
+</html>
