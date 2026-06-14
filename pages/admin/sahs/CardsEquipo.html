@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cards del Equipo - BoardForge</title>
+</head>
+<body>
+
+  <h1>Cards del Equipo</h1>
+
+  <button onclick="window.location.href='../../pages/login/index.html'">
+    Ir al Login</button> 
+
+  <hr>
+
+    <h2>Cards</h2>
+    ID del equipo: <input type="number" id="inp-team-id" />
+    <button id="btn-cargar">Cargar Cards</button>
+    <button id="btn-nueva-card">Nueva Card</button>
+    <p id="msg-cards"></p>
+
+    <ul id="contenedor-cards"></ul>
+
+    <hr>
+
+    <div id="formulario-card" style="display:none;">
+      <h2 id="form-titulo">Nueva Card</h2>
+      <input type="hidden" id="form-card-id" />
+      <input type="hidden" id="form-etag" />
+      Título: <input type="text" id="form-titulo-card" /><br><br>
+      Descripción: <input type="text" id="form-desc" /><br><br>
+      Orden: <input type="number" id="form-orden" value="0" /><br><br>
+      <button id="btn-guardar-card">Guardar</button>
+      <button id="btn-cancelar-card">Cancelar</button>
+      <p id="msg-form-card"></p>
+    </div>
+
+ 
+  <script type="module" src="CardsEquipo.js"></script>
+</body>
+</html>
