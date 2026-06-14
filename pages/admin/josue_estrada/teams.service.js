@@ -1,61 +1,64 @@
-import HttpService from '../../../services/http.service.js';
+import HttpService
+from "../../../shared/services/http.service.js";
+
+import TeamResponse
+from "../../../shared/models/response/team.response.js";
 
 export default class TeamsService {
 
     constructor() {
-        this.http = new HttpService();
-        this.endpoint = '/Teams';
+
+        this.http =
+            new HttpService();
+
+        this.endpoint =
+            "/Teams";
     }
 
-    /*
-    Crear Team
-    POST /api/Teams
-    */
-    async createTeam(teamData) {
+    async getTeams() {
+
+        const response =
+            await this.http.get(
+                this.endpoint
+            );
+
+        return response.map(
+            team =>
+                new TeamResponse(team)
+        );
+    }
+
+    async getTeamById(id) {
+
+        const response =
+            await this.http.get(
+                `${this.endpoint}/${id}`
+            );
+
+        return new TeamResponse(
+            response
+        );
+    }
+
+    async createTeam(teamRequest) {
 
         return await this.http.post(
             this.endpoint,
-            teamData
-        );
-    }
-    /*
-    Obtener Teams
-    GET /api/Teams
-    */
-    async getTeams() {
-
-        return await this.http.get(
-            this.endpoint
-        );
-    }
-    
-    /*
-    Obtener Team por Id
-    GET /api/Teams/{id}
-    */
-    async getTeamById(id) {
-
-        return await this.http.get(
-            `${this.endpoint}/${id}`
+            teamRequest.toJson()
         );
     }
 
-    /*
-    Actualizar Team
-    PUT /api/Teams/{id}
-    */
-    async updateTeam(id, teamData) {
+    async updateTeam(
+        id,
+        teamRequest
+    ) {
 
         return await this.http.put(
             `${this.endpoint}/${id}`,
-            teamData
+            teamRequest.toJson()
         );
     }
 
-    /*
-    Eliminar Team
-    DELETE /api/Teams/{id}
-    */
     async deleteTeam(id) {
 
         return await this.http.delete(
