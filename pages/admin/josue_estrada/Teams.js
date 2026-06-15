@@ -13,7 +13,7 @@ let editingTeamId = null;
 
   try {
 
-  ```
+  
    showLoading();
 
    const teams =
@@ -113,23 +113,23 @@ let editingTeamId = null;
            row
        );
    });
-  ```
+  
 
   } catch (error) {
 
-  ```
+  
    console.error(error);
 
    showErrorMessage(
        error.message
    );
-  ```
+  
 
   } finally {
 
-  ```
+  
    hideLoading();
-  ```
+  
 
   }
   }
@@ -144,7 +144,7 @@ let editingTeamId = null;
 
   try {
 
-  ```
+  
    showLoading();
 
    await teamsService.createTeam(
@@ -156,23 +156,23 @@ let editingTeamId = null;
    );
 
    await buildTable();
-  ```
+  
 
   } catch (error) {
 
-  ```
+  
    console.error(error);
 
    showErrorMessage(
        error.message
    );
-  ```
+  
 
   } finally {
 
-  ```
+  
    hideLoading();
-  ```
+  
 
   }
   }
@@ -188,7 +188,7 @@ let editingTeamId = null;
 
   try {
 
-  ```
+  
    showLoading();
 
    await teamsService.updateTeam(
@@ -203,23 +203,23 @@ let editingTeamId = null;
    cancelEdit();
 
    await buildTable();
-  ```
+  
 
   } catch (error) {
 
-  ```
+  
    console.error(error);
 
    showErrorMessage(
        error.message
    );
-  ```
+  
 
   } finally {
 
-  ```
+  
    hideLoading();
-  ```
+  
 
   }
   }
@@ -234,7 +234,7 @@ let editingTeamId = null;
 
   try {
 
-  ```
+  
    showLoading();
 
    await teamsService.deleteTeam(
@@ -246,23 +246,24 @@ let editingTeamId = null;
    );
 
    await buildTable();
-  ```
+  
 
   } catch (error) {
 
-  ```
+  
    console.error(error);
 
    showErrorMessage(
        error.message
    );
-  ```
+  
 
   } finally {
 
-  ```
-   hideLoading();
-  ```
+  
+  
+  hideLoading();
+  
 
   }
   }
@@ -345,7 +346,7 @@ let editingTeamId = null;
   "submit",
   async event => {
 
-  ```
+  
        event.preventDefault();
 
        const name =
@@ -395,7 +396,7 @@ let editingTeamId = null;
 
        form.reset();
    }
-  ```
+  
 
   );
   }
@@ -429,10 +430,10 @@ let editingTeamId = null;
 
   setTimeout(() => {
 
-  ```
+  
    successMessage.hidden =
        true;
-  ```
+  
 
   }, 3000);
   }
@@ -466,10 +467,10 @@ let editingTeamId = null;
 
   setTimeout(() => {
 
-  ```
+  
    errorMessage.hidden =
        true;
-  ```
+  
 
   }, 4000);
   }
@@ -487,11 +488,11 @@ let editingTeamId = null;
 
 function hideLoading() {
 
-```
+
 document.getElementById(
     "loading-message"
 ).hidden = true;
-```
+
 
 }
 
