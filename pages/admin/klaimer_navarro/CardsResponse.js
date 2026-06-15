@@ -38,7 +38,7 @@ export default class CardsResponse {
 
         if (!json) return null;
 
-        return new CardResponse(
+        return new CardsResponse(
             json.id,
             json.title,
             json.description,
