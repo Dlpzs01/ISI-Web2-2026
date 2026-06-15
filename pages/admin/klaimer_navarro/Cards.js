@@ -41,6 +41,8 @@ async function loadCard(id) {
 
         showMessage(error.message);
 
+        throw error;
+
     }
 }
 
@@ -90,33 +92,45 @@ async function loadLabels(id) {
 
         showMessage(error.message);
 
+        throw error;
+
     }
 }
 
 async function searchCard() {
 
-    const id = Number(cardIdInput.value);
+    try {
 
-    if (!id) {
+        const id = Number(cardIdInput.value);
+
+        if (!id) {
+
+            showMessage(
+                'Ingrese un ID válido.'
+            );
+
+            return;
+        }
+
+        currentCardId = id;
+
+        await loadCard(id);
+
+        await loadLabels(id);
 
         showMessage(
-            'Ingrese un ID válido.'
+            'Card cargada correctamente.'
         );
 
-        return;
+    } catch (error) {
+
+        showMessage(
+            error.message
+        );
+
     }
 
-    currentCardId = id;
-
-    await loadCard(id);
-
-    await loadLabels(id);
-
-    showMessage(
-        'Card cargada correctamente.'
-    );
 }
-
 async function addLabels() {
 
     try {
