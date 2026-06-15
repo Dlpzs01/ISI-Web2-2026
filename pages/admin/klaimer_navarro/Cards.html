@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Cards</title>
+
+    <link rel="stylesheet" href="./Cards.css">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <h1>Gestión de Cards</h1>
+
+        <section class="search-section">
+
+            <label for="card-id">
+                ID de la Card
+            </label>
+
+            <input
+                type="number"
+                id="card-id"
+                placeholder="Ingrese el ID"
+            >
+
+            <button id="btn-search">
+                Buscar
+            </button>
+
+        </section>
+
+        <section class="card-section">
+
+            <h2>Información de la Card</h2>
+
+            <table class="card-table">
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Título</th>
+                        <th>Descripción</th>
+                        <th>Orden</th>
+                        <th>Responsable</th>
+                    </tr>
+                </thead>
+
+                <tbody id="card-table-body">
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+        <section class="labels-section">
+
+            <h2>Etiquetas</h2>
+
+            <table class="labels-table">
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Color</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+
+                <tbody id="labels-table-body">
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+        <section class="add-label-section">
+
+            <h2>Agregar Etiquetas</h2>
+
+            <label for="label-ids">
+                 IDs de las etiquetas
+            </label>
+
+            <input
+                type="text"
+                id="label-ids"
+                placeholder="Ejemplo: 1,2,3"
+            >
+
+            <button id="btn-add-labels">
+                Agregar Etiquetas
+            </button>
+
+        </section>
+
+        <div id="message-container"></div>
+
+    </main>
+
+    <script type="module" src="./Cards.js"></script>
+
+</body>
+
+</html>
