@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Equipos - Fernanda</title>
+ 
+</head>
+<body>
+
+    <div class="kanban-container">
+        <header>
+            <h1>Gestión de Equipos</h1>
+            <p id="totalTareas">Total de equipos: </p>
+        </header>
+
+        <section class="task-form">
+            <input 
+                type="text" 
+                id="teamName" 
+                placeholder="Nombre del equipo">
+            
+            <input 
+                type="text" 
+                id="teamDescription" 
+                placeholder="Descripción del equipo">
+
+            <button type="button" onclick="guardarTeam()">
+                Guardar
+            </button>
+        </section>
+
+        <section class="search-bar">
+            <input 
+                type="text" 
+                id="buscar" 
+                placeholder="Buscar equipo..." 
+                onkeyup="buscarTeam()">
+            
+            <span id="mensaje"></span>
+        </section>
+
+        <main class="kanban-board">
+            
+            <div class="kanban-column" id="col-pendiente">
+                <div class="column-header">
+                    <h2>Pendientes</h2>
+                    <span class="badge" id="count-pendiente">0</span>
+                </div>
+                <div class="task-list" id="tasks-pendiente"></div>
+            </div>
+
+            <div class="kanban-column" id="col-progreso">
+                <div class="column-header">
+                    <h2>En Progreso</h2>
+                    <span class="badge" id="count-progreso">0</span>
+                </div>
+                <div class="task-list" id="tasks-progreso"></div>
+            </div>
+
+            <div class="kanban-column" id="col-completada">
+                <div class="column-header">
+                    <h2>Completadas</h2>
+                    <span class="badge" id="count-completada">0</span>
+                </div>
+                <div class="task-list" id="tasks-completada"></div>
+            </div>
+
+        </main>
+    </div>
+
+    <script type="module" src="Fernanda.js"></script>
+
+</body>
+</html>

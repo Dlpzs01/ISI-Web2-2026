@@ -1,4 +1,4 @@
-const baseUrl = "https://localhost:7286/api";
+const baseUrl = "https://localhost:44373/swagger/index.html";
 
 async function handleLoginSubmit(event) {
     event.preventDefault();
@@ -17,7 +17,7 @@ async function handleLoginSubmit(event) {
         const tokenString = JSON.stringify(data);
         localStorage.setItem('token', tokenString);
         setTimeout(() => {
-            window.location.href = window.location.origin + '/pages/admin/teams/teams.html';
+            window.location.href = window.location.origin + '/pages/admin/fernanda/Fernanda.html';
         }, 2000);
     } else {
         console.log('Login failed: ' + data.message);
