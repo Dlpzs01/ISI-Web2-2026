@@ -1,4 +1,4 @@
-export default class CardResponse {
+export default class CardsResponse {
 
     constructor(
         id,
