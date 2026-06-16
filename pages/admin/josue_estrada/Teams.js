@@ -1,5 +1,5 @@
-import TeamsService from "../../../shared/services/teams.service.js";
-/*import TeamRequest from "../../../shared/models/request/team.request.js";*/ /*aqui lo comente no se usara*/ 
+import TeamsService from "./teams.services";
+ 
 
 const teamsService = new TeamsService();
 
