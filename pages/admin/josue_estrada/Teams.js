@@ -1,5 +1,5 @@
 import TeamsService from "../../../shared/services/teams.service.js";
-import TeamRequest from "../../../shared/models/request/team.request.js";
+/*import TeamRequest from "../../../shared/models/request/team.request.js";*/ /*aqui lo comente no se usara*/ 
 
 const teamsService = new TeamsService();
 
@@ -7,335 +7,150 @@ let editingTeamId = null;
 
 /*
 
+* GET TEAMS
+  */
+  async function loadTeams() {
+
+  return await teamsService.getTeams();
+  }
+
+/*
+
 * BUILD TABLE
   */
   async function buildTable() {
 
-  try {
+  const teams = await loadTeams();
+
+  const tableBody =
+  document.getElementById(
+  "teams-table-body"
+  );
+
+  tableBody.innerHTML = "";
+
+  teams.forEach(team => {
 
   
-   showLoading();
+   const row =
+       document.createElement("tr");
 
-   const teams =
-       await teamsService.getTeams();
-
-   const tableBody =
-       document.getElementById(
-           "teams-table-body"
+   /*
+    * EDIT BUTTON
+    */
+   const editButton =
+       document.createElement(
+           "button"
        );
 
-   tableBody.innerHTML = "";
+   editButton.textContent =
+       "Edit";
 
-   teams.forEach(team => {
+   editButton.classList.add(
+       "edit-btn"
+   );
 
-       const row =
-           document.createElement("tr");
+   editButton.addEventListener(
+       "click",
+       () => {
 
-       row.innerHTML = `
-           <td>${team.id}</td>
-           <td>${team.name}</td>
-           <td>${team.description ?? "-"}</td>
-           <td>${team.memberCount ?? 0}</td>
-       `;
+           editingTeamId =
+               team.id;
 
-       const actionsTd =
-           document.createElement("td");
+           document.getElementById(
+               "team-name"
+           ).value =
+               team.name;
 
-       /*
-        * EDIT BUTTON
-        */
-       const editButton =
-           document.createElement(
-               "button"
-           );
+           document.getElementById(
+               "team-description"
+           ).value =
+               team.description ?? "";
 
-       editButton.textContent =
-           "Edit";
+           document.getElementById(
+               "create-team-btn"
+           ).textContent =
+               "Update Team";
 
-       editButton.classList.add(
-           "action-btn",
-           "edit-btn"
+           document.getElementById(
+               "cancel-edit-btn"
+           ).hidden =
+               false;
+       }
+   );
+
+   /*
+    * DELETE BUTTON
+    */
+   const deleteButton =
+       document.createElement(
+           "button"
        );
 
-       editButton.addEventListener(
-           "click",
-           () => editTeam(team)
-       );
+   deleteButton.textContent =
+       "Delete";
 
-       /*
-        * DELETE BUTTON
-        */
-       const deleteButton =
-           document.createElement(
-               "button"
-           );
+   deleteButton.classList.add(
+       "delete-btn"
+   );
 
-       deleteButton.textContent =
-           "Delete";
+   deleteButton.addEventListener(
+       "click",
+       async () => {
 
-       deleteButton.classList.add(
-           "action-btn",
-           "delete-btn"
-       );
-
-       deleteButton.addEventListener(
-           "click",
-           async () => {
-
-               const confirmed =
-                   confirm(
-                       "Are you sure you want to delete this team?"
-                   );
-
-               if (!confirmed) {
-                   return;
-               }
-
-               await deleteTeam(
-                   team.id
+           const confirmed =
+               confirm(
+                   "Delete this team?"
                );
+
+           if (!confirmed) {
+               return;
            }
+
+           await teamsService.deleteTeam(
+               team.id
+           );
+
+           await buildTable();
+       }
+   );
+
+   /*
+    * ACTIONS COLUMN
+    */
+   const td =
+       document.createElement(
+           "td"
        );
 
-       actionsTd.appendChild(
-           editButton
-       );
-
-       actionsTd.appendChild(
-           deleteButton
-       );
-
-       row.appendChild(
-           actionsTd
-       );
-
-       tableBody.appendChild(
-           row
-       );
-   });
-  
-
-  } catch (error) {
-
-  
-   console.error(error);
-
-   showErrorMessage(
-       error.message
-   );
-  
-
-  } finally {
-
-  
-   hideLoading();
-  
-
-  }
-  }
-
-/*
-
-* CREATE TEAM
-  */
-  async function createTeam(
-  request
-  ) {
-
-  try {
-
-  
-   showLoading();
-
-   await teamsService.createTeam(
-       request
+   td.appendChild(
+       editButton
    );
 
-   showSuccessMessage(
-       "Team created successfully"
+   td.appendChild(
+       deleteButton
    );
 
-   await buildTable();
+   row.innerHTML = `
+       <td>${team.id}</td>
+       <td>${team.name}</td>
+       <td>${team.description ?? "-"}</td>
+       <td>${team.memberCount ?? 0}</td>
+   `;
+
+   row.appendChild(td);
+
+   tableBody.appendChild(row);
   
 
-  } catch (error) {
-
-  
-   console.error(error);
-
-   showErrorMessage(
-       error.message
-   );
-  
-
-  } finally {
-
-  
-   hideLoading();
-  
-
-  }
-  }
-
-/*
-
-* UPDATE TEAM
-  */
-  async function updateTeam(
-  id,
-  request
-  ) {
-
-  try {
-
-  
-   showLoading();
-
-   await teamsService.updateTeam(
-       id,
-       request
-   );
-
-   showSuccessMessage(
-       "Team updated successfully"
-   );
-
-   cancelEdit();
-
-   await buildTable();
-  
-
-  } catch (error) {
-
-  
-   console.error(error);
-
-   showErrorMessage(
-       error.message
-   );
-  
-
-  } finally {
-
-  
-   hideLoading();
-  
-
-  }
-  }
-
-/*
-
-* DELETE TEAM
-  */
-  async function deleteTeam(
-  id
-  ) {
-
-  try {
-
-  
-   showLoading();
-
-   await teamsService.deleteTeam(
-       id
-   );
-
-   showSuccessMessage(
-       "Team deleted successfully"
-   );
-
-   await buildTable();
-  
-
-  } catch (error) {
-
-  
-   console.error(error);
-
-   showErrorMessage(
-       error.message
-   );
-  
-
-  } finally {
-
-  
-  
-  hideLoading();
-  
-
-  }
-  }
-
-/*
-
-* EDIT TEAM
-  */
-  function editTeam(team) {
-
-  editingTeamId =
-  team.id;
-
-  document.getElementById(
-  "team-name"
-  ).value =
-  team.name;
-
-  document.getElementById(
-  "team-description"
-  ).value =
-  team.description ?? "";
-
-  document.getElementById(
-  "form-title"
-  ).textContent =
-  "Edit Team";
-
-  document.getElementById(
-  "create-team-btn"
-  ).textContent =
-  "Update Team";
-
-  document.getElementById(
-  "cancel-edit-btn"
-  ).hidden =
-  false;
-  }
-
-/*
-
-* CANCEL EDIT
-  */
-  function cancelEdit() {
-
-  editingTeamId = null;
-
-  document.getElementById(
-  "create-team-form"
-  ).reset();
-
-  document.getElementById(
-  "form-title"
-  ).textContent =
-  "Create New Team";
-
-  document.getElementById(
-  "create-team-btn"
-  ).textContent =
-  "Save Team";
-
-  document.getElementById(
-  "cancel-edit-btn"
-  ).hidden =
-  true;
+  });
   }
 
 /*
 
 * FORM
   */
-  function initializeCreateTeamForm() {
+  function initializeForm() {
 
   const form =
   document.getElementById(
@@ -350,22 +165,24 @@ let editingTeamId = null;
        event.preventDefault();
 
        const name =
-           document.getElementById(
-               "team-name"
-           )
-           .value
-           .trim();
+           document
+               .getElementById(
+                   "team-name"
+               )
+               .value
+               .trim();
 
        const description =
-           document.getElementById(
-               "team-description"
-           )
-           .value
-           .trim();
+           document
+               .getElementById(
+                   "team-description"
+               )
+               .value
+               .trim();
 
        if (!name) {
 
-           showErrorMessage(
+           alert(
                "Team name is required"
            );
 
@@ -382,19 +199,34 @@ let editingTeamId = null;
            editingTeamId !== null
        ) {
 
-           await updateTeam(
+           await teamsService.updateTeam(
                editingTeamId,
                request
            );
 
+           editingTeamId =
+               null;
+
+           document.getElementById(
+               "create-team-btn"
+           ).textContent =
+               "Save Team";
+
+           document.getElementById(
+               "cancel-edit-btn"
+           ).hidden =
+               true;
+
        } else {
 
-           await createTeam(
+           await teamsService.createTeam(
                request
            );
        }
 
        form.reset();
+
+       await buildTable();
    }
   
 
@@ -403,96 +235,44 @@ let editingTeamId = null;
 
 /*
 
-* SUCCESS MESSAGE
+* CANCEL EDIT
   */
-  function showSuccessMessage(
-  message
-  ) {
+  function initializeCancelButton() {
 
-  const successMessage =
-  document.getElementById(
-  "success-message"
-  );
+  document
+  .getElementById(
+  "cancel-edit-btn"
+  )
+  .addEventListener(
+  "click",
+  () => {
 
-  const errorMessage =
-  document.getElementById(
-  "error-message"
-  );
 
-  errorMessage.hidden =
-  true;
+           editingTeamId =
+               null;
 
-  successMessage.textContent =
-  message;
+           document
+               .getElementById(
+                   "create-team-form"
+               )
+               .reset();
 
-  successMessage.hidden =
-  false;
+           document
+               .getElementById(
+                   "create-team-btn"
+               )
+               .textContent =
+               "Save Team";
 
-  setTimeout(() => {
-
+           document
+               .getElementById(
+                   "cancel-edit-btn"
+               )
+               .hidden =
+               true;
+       }
+   );
   
-   successMessage.hidden =
-       true;
-  
-
-  }, 3000);
-  }
-
-/*
-
-* ERROR MESSAGE
-  */
-  function showErrorMessage(
-  message
-  ) {
-
-  const successMessage =
-  document.getElementById(
-  "success-message"
-  );
-
-  const errorMessage =
-  document.getElementById(
-  "error-message"
-  );
-
-  successMessage.hidden =
-  true;
-
-  errorMessage.textContent =
-  message;
-
-  errorMessage.hidden =
-  false;
-
-  setTimeout(() => {
-
-  
-   errorMessage.hidden =
-       true;
-  
-
-  }, 4000);
-  }
-
-/*
-
-* LOADING
-  */
-  function showLoading() {
-
-  document.getElementById(
-  "loading-message"
-  ).hidden = false;
-  }
-
-function hideLoading() {
-
-
-document.getElementById(
-    "loading-message"
-).hidden = true;
-
 
 }
 
@@ -502,16 +282,9 @@ document.getElementById(
   */
   async function init() {
 
-  initializeCreateTeamForm();
+  initializeForm();
 
-  document
-  .getElementById(
-  "cancel-edit-btn"
-  )
-  .addEventListener(
-  "click",
-  cancelEdit
-  );
+  initializeCancelButton();
 
   await buildTable();
   }
