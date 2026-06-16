@@ -1,5 +1,5 @@
 
-import HttpService from "../../../shared/services/http.service.js";
+import HttpService from "../../../shared/services/teams.service";
 
 export default class TeamsService extends HttpService {
 
