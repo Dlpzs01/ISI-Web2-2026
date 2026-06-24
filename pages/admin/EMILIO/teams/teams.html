@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teams Page</title>
+
+    <link rel="stylesheet" href="../../../../shared/models/EMILIO-styles/styles.css">
+
+</head>
+
+<body>
+    <h1><u>Teams</u></h1>
+
+    <div class="zonaRelPages">
+        <button type="button" class="btnMovePages" onclick="window.location.href='/pages/admin/EMILIO/cards/cards.html';" class="btnMovePages">< Ver Cards</button>
+        <button type="button" class="btnMovePages" onclick="window.location.href='/pages/admin/EMILIO/teams-members/teams.members.html';" class="btnMovePages">Ver members de Teams ></button>
+
+    </div>
+
+    <!-- Formulario para crear/editar -->
+    <div class="form-container">
+        <h2 id="form-title">Crear nuevo equipo</h2>
+        <form id="team-form">
+            <input type="hidden" id="team-id" value="">
+            <input type="text" id="team-name" placeholder="Nombre del equipo" required>
+            <input type="text" id="team-description" placeholder="Descripción">
+            <button class="btnChanges" type="submit" id="save-btn">Guardar</button>
+            <button class="btnCancel" type="button" id="cancel-btn" style="display:none;">Cancelar</button>
+
+        </form>
+
+    </div>
+
+    <!-- Tabla de equipos -->
+    <div id="teams-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                    <th>Miembros</th>
+                    <th>Acciones</th>
+                </tr>
+
+            </thead>
+
+            <tbody id="teams-table-body">
+                <!-- Las filas se cargaran dinamicamente -->
+
+            </tbody>
+
+        </table>
+        
+    </div>
+    
+    <!-- Aqui cargamos el modulo principal -->
+    <script type="module" src="./teams.js"></script>
+
+</body>
+
+</html>

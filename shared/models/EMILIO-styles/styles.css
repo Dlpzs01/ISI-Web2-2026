@@ -1,0 +1,129 @@
+/**************************ESTILOS BASICOS PARA MEJOR VISUALIZACION*************************/
+body {
+    font-family: Arial;
+    margin: 20px;
+}
+
+.form-container {
+    background: #f4f4f4;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.form-container input {
+    display: block;
+    margin: 10px 0;
+    padding: 8px;
+    width: 300px;
+}
+
+.form-container button {
+    padding: 8px 16px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+.actions button {
+    margin-right: 5px;
+
+}
+
+
+/*************************************ZONA DE BOTONES*************************************/
+.zonaRelPages{
+    display: flex;
+    justify-content: flex-end; /* Alinea los botones a la izquierda */
+    gap: 15px; /* Espacio exacto de separación entre los botones */
+    align-items: center; /* Alinea verticalmente los botones si tienen diferente altura */
+
+}
+
+.btnMovePages{
+    background-color: transparent; 
+    color: grey;
+    border-color: transparent;
+
+}
+
+.btnOutPages
+{
+    background-color: transparent; 
+    color: red;
+    border-color: transparent;
+
+}
+
+.btnInPages
+{
+    background-color: transparent; 
+    color: lawngreen; 
+    border-color: transparent;
+
+}
+
+.btnChanges
+{
+    background-color: transparent; 
+    color: orange; 
+    border-radius: 5px;
+    border-color: orange;
+
+}
+
+.btnCancel
+{
+    background-color: transparent; 
+    color: black; 
+    border-radius: 5px;
+    border-color: black;
+
+}
+
+.btnMovePages:hover{
+    background-color: transparent; 
+    border-radius: 5px;
+    border-color: grey;
+
+}
+
+.btnOutPages:hover
+{
+    background-color: transparent; 
+    border-radius: 5px;
+    border-color: red;
+
+}
+
+.btnInPages:hover
+{
+    background-color: transparent; 
+    border-radius: 5px;
+    border-color: lawngreen;
+
+}
+
+.btnChanges:active
+{
+    background-color: orange; 
+    color: white; 
+    border-radius: 5px;
+
+}
+
+.btnCancel:active
+{
+    background-color: black; 
+    color: white; 
+    border-radius: 5px;
+
+}
